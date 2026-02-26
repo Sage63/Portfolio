@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  background: #0b0f19;
+  background-image: radial-gradient(circle at 12% 12%, rgba(124, 92, 255, 0.22), transparent 35%),
+    radial-gradient(circle at 90% 8%, rgba(34, 211, 238, 0.18), transparent 30%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@layer utilities {
+  .glass {
+    @apply border border-white/15 bg-white/5 backdrop-blur-xl;
+  }
+
+  .section-shell {
+    @apply mx-auto max-w-6xl px-5 py-20 sm:px-6 lg:px-8;
+  }
+}

@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Jan-Jan
+N:Jan-Jan;;;
+EMAIL;TYPE=INTERNET:hello@example.com
+URL:https://github.com/
+URL:https://linkedin.com/
+TITLE:Frontend Engineer
+END:VCARD

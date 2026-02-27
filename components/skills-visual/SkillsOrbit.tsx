@@ -20,24 +20,29 @@ export default function SkillsOrbit() {
         animate={{ rotate: 360 }}
         transition={{ duration: 22, ease: 'linear', repeat: Infinity }}
         className="absolute inset-0"
+        style={{ willChange: 'transform' }}
       >
         {skills.map((skill) => {
-          const Icon = skill.icon
+          const Icon = skill.icon;
+          const angle = skill.angle;
+          const orbitRadius = 'calc(var(--orbit-radius) - 32px)';
           return (
             <div
               key={skill.label}
               className="absolute left-1/2 top-1/2"
-              style={{ transform: `rotate(${skill.angle}deg) translateY(calc(var(--orbit-radius) * -1))` }}
+              style={{
+                transform: `rotate(${angle}deg) translateY(calc(${orbitRadius} * -1)) rotate(${-angle}deg) translate(-50%, -50%)`,
+                zIndex: 2,
+              }}
             >
               <div
                 className="w-[4.5rem] rounded-xl border border-accent/40 bg-background/80 px-2 py-2 text-center shadow-cyan sm:w-24 sm:px-3 sm:py-3"
-                style={{ transform: `translate(-50%, -50%) rotate(-${skill.angle}deg)` }}
               >
                 <Icon size={16} className="mx-auto text-accent" />
                 <p className="mt-1 whitespace-nowrap text-[10px] text-text/85 sm:text-xs">{skill.label}</p>
               </div>
             </div>
-          )
+          );
         })}
       </motion.div>
 

@@ -4,7 +4,7 @@ import SectionHeading from '@/components/ui/SectionHeading'
 import { motion } from 'framer-motion'
 import { Github, Star } from 'lucide-react'
 import Image from 'next/image'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type GitHubRepo = {
   id: number
@@ -27,6 +27,11 @@ type DashboardData = {
   } | null
   repos: GitHubRepo[]
   stars: number
+  contributions: {
+    date: string
+    level: number
+    color: string
+  }[]
 }
 
 export default function GitHubDashboard() {
@@ -48,11 +53,6 @@ export default function GitHubDashboard() {
 
     void fetchData()
   }, [])
-
-  const heatmap = useMemo(() => {
-    const seed = (data?.username || 'dev').split('').reduce((sum, char) => sum + char.charCodeAt(0), 0)
-    return Array.from({ length: 49 }, (_, index) => ((seed + index * 13) % 5) + 1)
-  }, [data?.username])
 
   return (
     <section id="github" className="section-shell">
@@ -94,13 +94,18 @@ export default function GitHubDashboard() {
             </div>
 
             <div className="mt-6">
-              <p className="mb-2 text-sm text-text/70">Contribution style heatmap</p>
+              <p className="mb-2 text-sm text-text/70">Real GitHub contributions (last 7 weeks)</p>
               <div className="grid grid-cols-7 gap-1">
-                {heatmap.map((value, index) => (
+                {(data.contributions.length ? data.contributions : Array.from({ length: 49 }, (_, index) => ({
+                  date: `day-${index}`,
+                  level: 0,
+                  color: '#ebedf0'
+                }))).map((day) => (
                   <span
-                    key={index}
+                    key={day.date}
                     className="h-3 rounded-sm"
-                    style={{ backgroundColor: `rgba(34,211,238,${0.12 + value * 0.17})` }}
+                    title={day.date}
+                    style={{ backgroundColor: day.color }}
                   />
                 ))}
               </div>

@@ -36,7 +36,7 @@ export default function GitHubDashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/github')
+        const response = await fetch('/api/github', { cache: 'no-store' })
         const json = (await response.json()) as DashboardData
         setData(json)
       } catch {

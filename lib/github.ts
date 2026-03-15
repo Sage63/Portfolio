@@ -31,7 +31,7 @@ async function safeFetch<T>(url: string, token?: string): Promise<T | null> {
       Accept: 'application/vnd.github+json',
       ...(token ? { Authorization: `Bearer ${token}` } : {})
     },
-    next: { revalidate: 1800 }
+    next: { revalidate: 300 }
   })
 
   if (!response.ok) {
@@ -47,7 +47,10 @@ export async function getGitHubDashboardData(): Promise<GitHubDashboardData> {
 
   const profile = await safeFetch<GitHubProfile>(`${GITHUB_API}/users/${username}`, token)
   const repos =
-    (await safeFetch<GitHubRepo[]>(`${GITHUB_API}/users/${username}/repos?per_page=6&sort=updated`, token)) || []
+    (await safeFetch<GitHubRepo[]>(
+      `${GITHUB_API}/users/${username}/repos?per_page=6&sort=pushed&direction=desc&type=owner`,
+      token
+    )) || []
 
   const stars = repos.reduce((sum, repo) => sum + repo.stargazers_count, 0)
 

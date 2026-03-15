@@ -38,6 +38,13 @@ GITHUB_USERNAME=your-github-username
 GITHUB_TOKEN=your-github-token
 ```
 
+For Vercel production, add the same variables in Project Settings > Environment Variables:
+
+- `GITHUB_USERNAME`
+- `GITHUB_TOKEN` (recommended to avoid GitHub rate limits)
+
+After adding or changing env vars in Vercel, redeploy so the latest values are applied.
+
 ## Advanced Features Added
 
 - Developer terminal mode with command parser and command history

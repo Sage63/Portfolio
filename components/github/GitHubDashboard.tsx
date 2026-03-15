@@ -94,9 +94,9 @@ export default function GitHubDashboard() {
             </div>
 
             <div className="mt-6">
-              <p className="mb-2 text-sm text-text/70">Real GitHub contributions (last 12 months)</p>
-              <div className="grid grid-rows-7 grid-flow-col auto-cols-[12px] gap-1 overflow-x-auto pb-2">
-                {(data.contributions.length ? data.contributions : Array.from({ length: 365 }, (_, index) => ({
+              <p className="mb-2 text-sm text-text/70">Real GitHub contributions (last 7 weeks)</p>
+              <div className="grid grid-cols-7 gap-1">
+                {(data.contributions.length ? data.contributions : Array.from({ length: 49 }, (_, index) => ({
                   date: `day-${index}`,
                   level: 0,
                   color: '#ebedf0'
@@ -108,13 +108,6 @@ export default function GitHubDashboard() {
                     style={{ backgroundColor: day.color }}
                   />
                 ))}
-              </div>
-              <div className="mt-3 flex items-center gap-2 text-[11px] text-text/65">
-                <span>Less</span>
-                {['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'].map((color) => (
-                  <span key={color} className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: color }} />
-                ))}
-                <span>More</span>
               </div>
             </div>
           </article>

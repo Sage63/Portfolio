@@ -31,7 +31,6 @@ export type GitHubDashboardData = {
 }
 
 const GITHUB_API = 'https://api.github.com'
-const HEATMAP_DAYS = 365
 
 const GITHUB_LEVEL_COLORS = ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'] as const
 
@@ -84,7 +83,7 @@ async function getGitHubContributions(username: string): Promise<GitHubContribut
     })
     .filter((day) => day !== null) as GitHubContributionDay[]
 
-  return days.slice(-HEATMAP_DAYS)
+  return days.slice(-49)
 }
 
 export async function getGitHubDashboardData(): Promise<GitHubDashboardData> {

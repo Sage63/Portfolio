@@ -45,6 +45,8 @@ For Vercel production, add the same variables in Project Settings > Environment 
 
 After adding or changing env vars in Vercel, redeploy so the latest values are applied.
 
+If `GITHUB_USERNAME` is missing, the app will try to infer your username from `GITHUB_TOKEN` via the GitHub API.
+
 ## Advanced Features Added
 
 - Developer terminal mode with command parser and command history

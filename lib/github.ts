@@ -7,6 +7,10 @@ type GitHubProfile = {
   name: string | null
 }
 
+type GitHubAuthenticatedUser = {
+  login: string
+}
+
 type GitHubRepo = {
   id: number
   name: string
@@ -50,6 +54,23 @@ async function safeFetch<T>(url: string, token?: string): Promise<T | null> {
   return (await response.json()) as T
 }
 
+async function resolveGitHubUsername(token?: string): Promise<string> {
+  const configuredUsername = (process.env.GITHUB_USERNAME || process.env.NEXT_PUBLIC_GITHUB_USERNAME || '').trim()
+
+  if (configuredUsername) {
+    return configuredUsername
+  }
+
+  if (token) {
+    const authenticatedUser = await safeFetch<GitHubAuthenticatedUser>(`${GITHUB_API}/user`, token)
+    if (authenticatedUser?.login) {
+      return authenticatedUser.login
+    }
+  }
+
+  return 'octocat'
+}
+
 async function getGitHubContributions(username: string): Promise<GitHubContributionDay[]> {
   const response = await fetch(`https://github.com/users/${username}/contributions`, {
     headers: {
@@ -87,8 +108,8 @@ async function getGitHubContributions(username: string): Promise<GitHubContribut
 }
 
 export async function getGitHubDashboardData(): Promise<GitHubDashboardData> {
-  const username = process.env.GITHUB_USERNAME || process.env.NEXT_PUBLIC_GITHUB_USERNAME || 'octocat'
   const token = process.env.GITHUB_TOKEN
+  const username = await resolveGitHubUsername(token)
 
   const profile = await safeFetch<GitHubProfile>(`${GITHUB_API}/users/${username}`, token)
   const repos =
